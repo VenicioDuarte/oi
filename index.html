@@ -113,11 +113,13 @@
     const buttonRect = button.getBoundingClientRect();
 
     let i, j;
+    let tries = 0;
 
     do {
       i = Math.random() * (containerRect.width - buttonRect.width);
       j = Math.random() * (containerRect.height - buttonRect.height);
-    } while (i < 20 || j < 20 || i > containerRect.width - buttonRect.width - 20 || j > containerRect.height - buttonRect.height - 20);
+      tries++;
+    } while ((i < 50 || j < 50 || i > containerRect.width - buttonRect.width - 50 || j > containerRect.height - buttonRect.height - 50) && tries < 100);
 
     button.style.position = 'absolute';
     button.style.left = `${i}px`;
