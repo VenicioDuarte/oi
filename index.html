@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido para ser sua duo</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+  .container {
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+  }
+  h1 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+  }
+  #yesBtn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  #yesBtn:hover {
+    background-color: #45a049;
+  }
+  #noBtn {
+    background-color: #f44336;
+    color: white;
+  }
+  #noBtn:hover {
+    background-color: #da190b;
+  }
+  #message {
+    display: none;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    transform: rotate(45deg);
+    animation: float 5s infinite ease-in-out;
+  }
+  .heart::before, .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+  .heart::after {
+    top: 0;
+    left: -10px;
+  }
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(45deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100vh) rotate(45deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Você quer ser minha duo?</h1>
+  <button id="yesBtn">Sim</button>
+  <button id="noBtn">Não</button>
+  <p id="message">Somos duos agora!</p>
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const message = document.getElementById('message');
+  const container = document.querySelector('.container');
+
+  yesBtn.addEventListener('click', () => {
+    message.style.display = 'block';
+  });
+
+  function moveButton(button) {
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+
+    let i, j;
+
+    do {
+      i = Math.random() * (containerRect.width - buttonRect.width);
+      j = Math.random() * (containerRect.height - buttonRect.height);
+    } while (i < 20 || j < 20 || i > containerRect.width - buttonRect.width - 20 || j > containerRect.height - buttonRect.height - 20);
+
+    button.style.position = 'absolute';
+    button.style.left = `${i}px`;
+    button.style.top = `${j}px`;
+  }
+
+  noBtn.addEventListener('mouseover', () => moveButton(noBtn));
+  noBtn.addEventListener('touchstart', () => moveButton(noBtn));
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    document.body.appendChild(heart);
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
